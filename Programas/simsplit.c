@@ -21,6 +21,7 @@ int nAcessosI1,		// Número total de acessos a instruções
      nFalhasD1;     // Número de falhas na cache D1
 
 tCache cacheI1;	// Cache I1
+tCache cacheD1; // Cache D1
 /* Criar linha similar para cacheD1*/ 
 
 FILE *arqAcessos;	// Arquivo de trace com acessos a memória
