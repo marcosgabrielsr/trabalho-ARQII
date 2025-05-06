@@ -1,8 +1,8 @@
 //-----------------------------------------------------------------------------
-// Simulador de cache básica: UM ÚNICO NÍVEL DE CACHE SPLIT, SEPARADA PARA INSTRUÇÕES E DADOS
+// Simulador de cache básica: UM ÚNICO NÍVEL DE CACHE, UNIFICADA PARA INSTRUÇÕES E DADOS
 //
-// Para compilar: gcc cache.c simsplit.c -o simsplit -Wall
-// Para executar: simsplit arquivoConfiguracao arquivoAcessos
+// Para compilar: gcc cache.c simbasica.c -o simbasica -Wall
+// Para executar: simbasica arquivoConfiguracao arquivoAcessos
 //-----------------------------------------------------------------------------
 // Bibliotecas
 
@@ -15,14 +15,13 @@
 // Variaveis
 
 						// Medidas de desempenho
-int nAcessosI1,		// Número total de acessos a instruções
-	 nAcessosD1,	// Número total de acessos a dados
-	 nFalhasI1,		// Número de falhas na cache L1
-     nFalhasD1;     // Número de falhas na cache D1
+int nAcessosI1,		// Número total de acessos a instruções 
+	 nAcessosD1,		// Número total de acessos a dados
+	 nFalhasI1;	    // Número de falhas na cache I1
+     nFalhasD1;    // Número de falhas na cache D1
 
 tCache cacheI1;	// Cache I1
-tCache cacheD1; // Cache D1
-/* Criar linha similar para cacheD1*/ 
+tCache cacheD1; // cache D1
 
 FILE *arqAcessos;	// Arquivo de trace com acessos a memória
 
@@ -52,19 +51,18 @@ int main(int argc, char **argv)
 
 		if ((result != 0) && (result != EOF))
 		{
-			if (tipoAcesso == 'I') { // Acesso é leitura de uma instrução
-                nAcessosI1++;
-
-                // Procura bloco na cache I1 e, se não encontra, insere bloco na cache
-			    // Valor de retorno = 0 (acerto), 1 (falha sem substituição) ou 2 (falha com substituição)
-			    resultAcesso = buscaInsereCache(&cacheI1, endereco);
-
-                if ((resultAcesso == 1) || (resultAcesso == 2))	// Se houve falha na cache
-				    nFalhasI1 ++;
-            }
-			else {	// Acesso é leitura de dado ('L') ou escrita de dado ('S')
+			if (tipoAcesso == 'I')	// Acesso é leitura de uma instrução
+				nAcessosI1++;
+                resultAcesso = buscaInsereCache(&cacheI1, endereco);
+                if (resultAcesso == 1 || resultAcesso == 2 ){
+                    nFalhasI1++;
+                }
+			else	// Acesso é leitura de dado ('L') ou escrita de dado ('S')
 				nAcessosD1++;
-            }    
+                resultAcesso = buscaInsereCache(&cacheD1, endereco);
+
+			    if ((resultAcesso == 1) || (resultAcesso == 2))	// Se houve falha na cache
+				    nFalhasD1 ++;
 		}
 	}
 
@@ -79,18 +77,21 @@ void inicializa(int argc, char **argv)
 		  nomeArqAcessos[100];
 
 	unsigned int nBlocosI1,				// Número total de blocos da cache I1
-					 associatividadeI1,	// Número de blocos por conjunto da cache I1
-					 nPalavrasBlocoI1;	// Número de palavras do bloco da cache I1
+					associatividadeI1,	// Número de blocos por conjunto da cache I1
+					nPalavrasBlocoI1;	// Número de palavras do bloco da cache I1
+    unsigned int nBlocosD1,             // Número total de blocos da cache D1
+                    associatividadeD1,  // Número de blocos por conjunto da cache D1
+                    nPalavrasBlocoD1;  // Número de palavras do bloco da cache D1
 
 	FILE *arqConfig;	// Arquivo com configuração da cache
 
 	if (argc != 3)
 	{
-		printf("\nUso: simsplit arquivoConfiguracao arquivoAcessos\n");
+		printf("\nUso: simbasica arquivoConfiguracao arquivoAcessos\n");
 		exit(0);
 	}
 
-	// Lê arquivo de configuracao e obtem nBlocos, associatividade e nPalavrasBloco da cache I1 e D1
+	// Lê arquivo de configuracao e obtem nBlocos, associatividade e nPalavrasBloco da cache L1
 	strcpy(nomeArqConfig, argv[1]);
 	arqConfig = fopen(nomeArqConfig, "rt");
 	if (arqConfig == NULL)
@@ -99,12 +100,12 @@ void inicializa(int argc, char **argv)
 		exit(0);
 	}
 	fscanf(arqConfig, "%d %d %d", &nBlocosI1, &associatividadeI1, &nPalavrasBlocoI1);
-    /* Criar linha similar para cacheD1*/ 
+    fscanf(arqConfig, "%d %d %d", &nBlocosD1, &associatividadeD1, &nPalavrasBlocoD1);
 	fclose(arqConfig);
 
 	// Abre arquivo de acessos
 	strcpy(nomeArqAcessos, argv[2]);
-    arqAcessos = fopen(nomeArqAcessos, "rt");
+   arqAcessos = fopen(nomeArqAcessos, "rt");
 	if (arqAcessos == NULL)
 	{
 		printf("\nArquivo de acessos não encontrado\n");
@@ -119,7 +120,7 @@ void inicializa(int argc, char **argv)
 
 	// Aloca e inicializa estrutura de dados da cache L1
 	alocaCache(&cacheI1, nBlocosI1, associatividadeI1, nPalavrasBlocoI1);
-    /* Criar linha similar para cacheD1*/ 
+    alocaCache(&cacheD1, nBlocosD1, associatividadeD1, nPalavrasBlocoD1);
 }
 
 //-----------------------------------------------------------------------------
@@ -129,14 +130,14 @@ void finaliza(void)
 	fclose(arqAcessos);
 
 	// Imprime medidas de desempenho
-	printf("nAcessosI1: %d\n", nAcessosI1);
-	printf("nAcessosD1: %d\n", nAcessosD1);
-	printf("nFalhasL1: %d\n", nFalhasI1);
-    /* Criar linha similar para cacheD1*/ 
+	printf("nAcessosI: %d\n", nAcessosI1);
+	printf("nAcessosD: %d\n", nAcessosD1);
+	printf("nFalhasI1: %d\n", nFalhasI1);
+    printf("nFalhasD1: %d\n", nFalhasD1);
 
 	// Libera estrutura de dados da cache
 	liberaCache(&cacheI1);
-    /* Criar linha similar para cacheD1*/ 
+    liberaCache(&cacheD1);
 }
 
 //-----------------------------------------------------------------------------
