@@ -1,8 +1,8 @@
-//----------------------------------------------------------------------------- 
+//-----------------------------------------------------------------------------
 // Simulador de cache básica: UM ÚNICO NÍVEL DE CACHE, UNIFICADA PARA INSTRUÇÕES E DADOS
-// Para compilar: gcc cache.c simbasica.c -o simbasica -Wall
-// Para executar: simbasica arquivoConfiguracao arquivoAcessos
-//----------------------------------------------------------------------------- 
+// Para compilar: gcc cache.c simniveis.c -o simniveis -Wall
+// Para executar: simniveis arquivoConfiguracao arquivoAcessos
+//-----------------------------------------------------------------------------
 
 #include <stdio.h>
 #include <stdlib.h>

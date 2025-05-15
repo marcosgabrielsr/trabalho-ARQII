@@ -1,8 +1,8 @@
 //-----------------------------------------------------------------------------
-// Simulador de cache básica: UM ÚNICO NÍVEL DE CACHE, UNIFICADA PARA INSTRUÇÕES E DADOS
+// Simulador de cache básica: UM ÚNICO NÍVEL DE CACHE, DIVIDIDA PARA INSTRUÇÕES E DADOS
 //
-// Para compilar: gcc cache.c simbasica.c -o simbasica -Wall
-// Para executar: simbasica arquivoConfiguracao arquivoAcessos
+// Para compilar: gcc cache.c simsplit.c -o simsplit -Wall
+// Para executar: simsplit arquivoConfiguracao arquivoAcessos
 //-----------------------------------------------------------------------------
 // Bibliotecas
 
@@ -15,7 +15,7 @@
 // Variaveis
 
 						// Medidas de desempenho
-int nAcessosI1,		// Número total de acessos a instruções (Modificado Nome e adionado informação)    
+int nAcessosI1,		// Número total de acessos a instruções (Modificado Nome e adionado informação)
 	 nAcessosD1,	// Número total de acessos a dados
 	 nFalhasI1,	    // Número de falhas na cache I1
      nFalhasD1;    // Número de falhas na cache D1
@@ -59,7 +59,7 @@ int main(int argc, char **argv)
                     nFalhasI1++;
                 }
 			}
-			
+
 			else{	// Acesso é leitura de dado ('L') ou escrita de dado ('S')
 				nAcessosD1++;
                 resultAcesso = buscaInsereCache(&cacheD1, endereco);
