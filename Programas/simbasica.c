@@ -65,8 +65,18 @@ int main(int argc, char **argv)
 
 	finaliza();
 	double nAcessosTotal = nAcessosD + nAcessosI;
-	printf("N° total de palavras: %d\n", cacheL1.nBlocos * cacheL1.nPalavrasBloco);
-	printf("Taxa de falhas: %lf\n", nFalhasL1/nAcessosTotal);
+	double taxaFalhas = nFalhasL1/nAcessosTotal;
+	double falhasInstrucao = (double)nFalhasL1/nAcessosI;
+	double ciclosStallMemoriaInstrucao = nAcessosTotal + nFalhasL1*100;
+
+	printf("Taxa de falhas: %lf\n", taxaFalhas);
+	printf("Tempo efetivo de acesso a memoria: %lf\n", nAcessosTotal + nFalhasL1*100);
+	printf("Falhas por Instrucao: %lf\n", falhasInstrucao);
+	printf("Ciclos em stall pela memoria por instrucao: %lf\n", ciclosStallMemoriaInstrucao);
+	printf("CPI Real: %lf\n", 1 + ciclosStallMemoriaInstrucao);
+
+	//printf("N° total de palavras: %d\n", cacheL1.nBlocos * cacheL1.nPalavrasBloco);
+	//printf("Taxa de falhas: %lf\n", nFalhasL1/nAcessosTotal);
 
 	return 0;
 }

@@ -70,8 +70,12 @@ int main(int argc, char **argv)
 	}
 }
 
-
 	finaliza();
+	double nTotalAcessos = nAcessosD1 + nAcessosI1;
+
+	printf("N° total de palavras D1: %d\n", cacheD1.nBlocos * cacheD1.nPalavrasBloco);
+	printf("N° total de palavras I1: %d\n", cacheI1.nBlocos * cacheI1.nPalavrasBloco);
+	printf("Taxa falhas combinada I1D1(*): %lf\n", (nFalhasI1 + nFalhasD1)/nTotalAcessos);
 
 	return 0;
 }
