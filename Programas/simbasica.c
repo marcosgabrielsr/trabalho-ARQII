@@ -64,6 +64,9 @@ int main(int argc, char **argv)
 	}
 
 	finaliza();
+	double nAcessosTotal = nAcessosD + nAcessosI;
+	printf("N° total de palavras: %d\n", cacheL1.nBlocos * cacheL1.nPalavrasBloco);
+	printf("Taxa de falhas: %lf\n", nFalhasL1/nAcessosTotal);
 
 	return 0;
 }

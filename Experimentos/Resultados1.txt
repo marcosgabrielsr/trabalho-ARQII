@@ -2,29 +2,29 @@
 Resultados:
 ---------------------------------------------------------------------------------
 Configuração: L1:64-1-1
-N° total de palavras: 63159737
+N° total de palavras: 64
 Taxa de falhas: 0.348963
 ---------------------------------------------------------------------------------
 Configuração: L1:128-1-1
-N° total de palavras: 63159737
+N° total de palavras: 128
 Taxa de falhas: 0.320193
 ---------------------------------------------------------------------------------
 Configuração: L1:256-1-1
-N° total de palavras: 63159737
+N° total de palavras: 256
 Taxa de falhas: 0.273900
 ---------------------------------------------------------------------------------
 Configuração: L1:64-2-1
-N° total de palavras: 63159737
+N° total de palavras: 64
 Taxa de falhas: 0.336727
 ---------------------------------------------------------------------------------
 Configuração: L1:64-4-1
-N° total de palavras: 63159737
+N° total de palavras: 64
 Taxa de falhas: 0.315661
 ---------------------------------------------------------------------------------
 Configuração: L1:64-1-2
-N° total de palavras: 63159737
+N° total de palavras: 128
 Taxa de falhas: 0.215049
 ---------------------------------------------------------------------------------
 Configuração: L1:64-1-4
-N° total de palavras: 63159737
+N° total de palavras: 256
 Taxa de falhas: 0.134892
