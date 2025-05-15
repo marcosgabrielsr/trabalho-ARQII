@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------
-// Simulador de cache básica: UM ÚNICO NÍVEL DE CACHE, UNIFICADA PARA INSTRUÇÕES E DADOS
+// Simulador de cache básica: DOIS NÍVEIS DE CACHE, O PRIMEIRO DIVIDIDO E O SEGUNDO UNIFICADO PARA INSTRUÇÕES E DADOS
 // Para compilar: gcc cache.c simniveis.c -o simniveis -Wall
 // Para executar: simniveis arquivoConfiguracao arquivoAcessos
 //-----------------------------------------------------------------------------
