@@ -28,3 +28,11 @@ Taxa de falhas: 0.215049
 Configuração: L1:64-1-4
 N° total de palavras: 256
 Taxa de falhas: 0.134892
+
+---------------------------------------------------------------------------------
+3 - Modifições para contagem de tipos de falhas (compulsória, de capacidade, de conflito):
+    -   Falhas compulsórias: Para determinar a quantidade deste tipo de falha criariamos um vetor dinâmico que iria armazenar os endereços que já foram trazidos até a cache. Quando um endereço fosse inserido na cache, iriamos procurá-lo nesta lista, se ele não estiver lá contaríamos como uma falha compulsória.
+
+    -   Falhas de Capacidade: Quando formos retirar um endereço da cache, fazemos uma contagem dos bits de validacao se ele for igual ao número de conjuntos da cache, signfica que quando o elemento foi retirado a cache estava cheia. Dessa forma, podemos adicionar mais um campo em nosso vetor dinâmico que sinaliza que quando o endereço foi retirado a cache estava cheia (1) ou estava vazia (0).
+
+    - Falhas de Conflito: Por fim, podemos utilizar as estruturas anteriores para contar as quantidades de falhas de conflito, de forma que, se o elemento estiver em nosso vetor dinâmico de endereços e seu campo que indica cache cheia em sua troca for zero, temos uma falha de conflito, caso o indicador de cache cheia na troca 1, é uma falha de capacidade.

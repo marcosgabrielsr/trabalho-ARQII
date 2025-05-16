@@ -77,16 +77,16 @@ int main(int argc, char **argv)
     }
 
     finaliza();
-    double nTotalAcessos = nAcessosD1 + nAcessosI1;
-    double nAcertosI1 = nAcessosI1 - nFalhasI1;
-    double nAcertosD1 = nAcessosD1 - nFalhasD1;
-    double nAcertosL1 = nAcertosI1 + nAcertosD1;
-    double taxaFalhasComb = (nFalhasI1 + nFalhasD1)/nTotalAcessos;
-    double taxaFalhasGlobalL2 = (double)nAcessosL2/nTotalAcessos;
-    double nInstrucoes = nAcessosI1;
-    double falhasInstrucaoL1 = (nFalhasI1 + nFalhasD1)/nInstrucoes;
-    double falhasInstrucaoL2 = nFalhasL2/nInstrucoes;
-    double ciclosStallInstrucao = falhasInstrucaoL1*10 + falhasInstrucaoL2*100;
+    double nTotalAcessos = nAcessosD1 + nAcessosI1;                                 //Número total de acessos à memória L1
+    double nAcertosI1 = nAcessosI1 - nFalhasI1;                                     // Número de acertos à cache I1
+    double nAcertosD1 = nAcessosD1 - nFalhasD1;                                     // Número de acertos à cache D1
+    double nAcertosL1 = nAcertosI1 + nAcertosD1;                                    // Número de acertos da memória L1
+    double taxaFalhasComb = (nFalhasI1 + nFalhasD1)/nTotalAcessos;                  // Taxa de Falhas Combinada da Cache L1
+    double taxaFalhasGlobalL2 = (double)nAcessosL2/nTotalAcessos;                   // Taxa de Falhas Global da cache L2
+    double nInstrucoes = nAcessosI1;                                                // Número de instruções executadas
+    double falhasInstrucaoL1 = (nFalhasI1 + nFalhasD1)/nInstrucoes;                 // Falhas por instrução da cache L1
+    double falhasInstrucaoL2 = nFalhasL2/nInstrucoes;                               // Falhas por instrução da cache L2
+    double ciclosStallInstrucao = falhasInstrucaoL1*10 + falhasInstrucaoL2*100;     // Ciclos em Stall por Instrução
 
 	printf("N° total de palavras D1: %d\n", cacheD1.nBlocos * cacheD1.nPalavrasBloco);
 	printf("N° total de palavras I1: %d\n", cacheI1.nBlocos * cacheI1.nPalavrasBloco);
