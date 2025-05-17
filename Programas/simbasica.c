@@ -64,13 +64,14 @@ int main(int argc, char **argv)
 	}
 
 	finaliza();
-	double nAcessosTotal = nAcessosD + nAcessosI;                           // Número de acessos total à cache L1
-	double taxaFalhas = nFalhasL1/nAcessosTotal;                            // Taxa de falhas
-	double falhasInstrucao = (double)nFalhasL1/nAcessosI;                   // Falhas por instrução
-	double ciclosStallMemoriaInstrucao = nAcessosTotal + nFalhasL1*100;     // Ciclos em Stall por Instrução
+	double nAcessosTotal = nAcessosD + nAcessosI;                                       // Número de acessos total à cache L1
+	double taxaFalhas = nFalhasL1/nAcessosTotal;                                        // Taxa de falhas
+	double tEfetAcessoMem = 1 + taxaFalhas*100;
+	double falhasInstrucao = (double)nFalhasL1/nAcessosI;                               // Falhas por instrução
+	double ciclosStallMemoriaInstrucao = falhasInstrucao*100;                           // Ciclos em Stall por Instrução
 
 	printf("Taxa de falhas: %lf\n", taxaFalhas);
-	printf("Tempo efetivo de acesso a memoria: %lf\n", nAcessosTotal + nFalhasL1*100);
+	printf("Tempo efetivo de acesso a memoria: %lf\n", tEfetAcessoMem);
 	printf("Falhas por Instrucao: %lf\n", falhasInstrucao);
 	printf("Ciclos em stall pela memoria por instrucao: %lf\n", ciclosStallMemoriaInstrucao);
 	printf("CPI Real: %lf\n", 1 + ciclosStallMemoriaInstrucao);

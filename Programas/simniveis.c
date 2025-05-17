@@ -78,22 +78,20 @@ int main(int argc, char **argv)
 
     finaliza();
     double nTotalAcessos = nAcessosD1 + nAcessosI1;                                 //Número total de acessos à memória L1
-    double nAcertosI1 = nAcessosI1 - nFalhasI1;                                     // Número de acertos à cache I1
-    double nAcertosD1 = nAcessosD1 - nFalhasD1;                                     // Número de acertos à cache D1
-    double nAcertosL1 = nAcertosI1 + nAcertosD1;                                    // Número de acertos da memória L1
     double taxaFalhasComb = (nFalhasI1 + nFalhasD1)/nTotalAcessos;                  // Taxa de Falhas Combinada da Cache L1
-    double taxaFalhasGlobalL2 = (double)nAcessosL2/nTotalAcessos;                   // Taxa de Falhas Global da cache L2
+    double taxaFalhasGlobalL2 = (double)nFalhasL2/nTotalAcessos;                   // Taxa de Falhas Global da cache L2
     double nInstrucoes = nAcessosI1;                                                // Número de instruções executadas
     double falhasInstrucaoL1 = (nFalhasI1 + nFalhasD1)/nInstrucoes;                 // Falhas por instrução da cache L1
     double falhasInstrucaoL2 = nFalhasL2/nInstrucoes;                               // Falhas por instrução da cache L2
     double ciclosStallInstrucao = falhasInstrucaoL1*10 + falhasInstrucaoL2*100;     // Ciclos em Stall por Instrução
+    double tEfetivoAcessoMem = 1 + taxaFalhasComb*10 + taxaFalhasGlobalL2*100;
 
 	printf("N° total de palavras D1: %d\n", cacheD1.nBlocos * cacheD1.nPalavrasBloco);
 	printf("N° total de palavras I1: %d\n", cacheI1.nBlocos * cacheI1.nPalavrasBloco);
 	printf("Taxa falhas combinada I1D1: %lf\n", taxaFalhasComb);
-	printf("Taxa de falhas Local L2: %lf\n", (double)nAcessosL2/nFalhasL2);
+	printf("Taxa de falhas Local L2: %lf\n", (double)nFalhasL2/nAcessosL2);
 	printf("Taxa de falhas Global L2: %lf\n", taxaFalhasGlobalL2);
-	printf("Tempo efetivo de acesso a memoria: %lf\n", nAcertosL1*1 + taxaFalhasComb*10 + taxaFalhasGlobalL2*100);
+	printf("Tempo efetivo de acesso a memoria: %lf\n", tEfetivoAcessoMem);
 	printf("Falhas por instrucao I1D1: %lf\n", falhasInstrucaoL1);
 	printf("Falhas por instrucao L2: %lf\n", nFalhasL2/nInstrucoes);
 	printf("Ciclos em stall por instrução: %lf\n", ciclosStallInstrucao);

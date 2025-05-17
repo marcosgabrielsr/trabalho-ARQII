@@ -7,10 +7,10 @@ nAcessosI: 49165608
 nAcessosD: 13994129
 nFalhasL1: 13582433
 Taxa de falhas: 0.215049
-Tempo efetivo de acesso a memoria: 1421403037.000000
+Tempo efetivo de acesso a memoria: 22.504892
 Falhas por Instrucao: 0.276259
-Ciclos em stall pela memoria por instrucao: 1421403037.000000
-CPI Real: 1421403038.000000
+Ciclos em stall pela memoria por instrucao: 27.625882
+CPI Real: 28.625882
 ---------------------------------------------------------------------------------
 ** Cache 2 níveis **
 Configuração: I1:32-1-1 D1:32-1-1 L2:64-2-8
@@ -23,9 +23,9 @@ nFalhasL2: 4222502
 N° total de palavras D1: 64
 N° total de palavras I1: 64
 Taxa falhas combinada I1D1: 0.200958
-Taxa de falhas Local L2: 3.005911
-Taxa de falhas Global L2: 0.200958
-Tempo efetivo de acesso a memoria: 50467293.105400
+Taxa de falhas Local L2: 0.332678
+Taxa de falhas Global L2: 0.066854
+Tempo efetivo de acesso a memoria: 9.695015
 Falhas por instrucao I1D1: 0.258157
 Falhas por instrucao L2: 0.085883
 Ciclos em stall por instrução: 11.169899
